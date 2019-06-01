@@ -1,29 +1,13 @@
-# this package is python package for ROS speech, which use online baidu speech to do TTS and speech recognition.
+# Voice Command
+A ROS package for recognize the voice command for robot.
 
-# this code is run well in ubuntu 14.04, thinkpad T44s.
+#How to use
 
-# you can visit the baidu speech home page at here: http://yuyin.baidu.com/
-
-# the key and id is show below, feel free to change it in simple_speaker.launch and simple_voice.launch.
-
-
-App ID: 8168466
-
-API Key: pmUzrWcsA3Ce7RB5rSqsvQt2
-
-Secret Key: d39ec848d016a8474c7c25e308b310c3
-
-# subscribe topic
-speak_string
-#type
-string
-
-# How to run:
-
-Speech Recognition:　roslaunch simple_voice simple_voice.launch
-
-Text To Speech:  roslaunch simple_voice simple_speaker.launch
-
-# wiki
-http://wiki.ros.org/baidu_speech
+```
+1. modify the filepath in `voice_command.launch`
+2. roslaunch voice_command voice_command.launch
+3. push the button on the left_right corner of rviz to record voice.
+4. release the button to recognize.
+5. result will be shown in console.
+```
 
