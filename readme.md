@@ -1,7 +1,7 @@
 # Voice Command
 A ROS package for recognize the voice command for robot.
 
-#How to use
+# How to use
 
 ```
 1. modify the filepath in `voice_command.launch`
