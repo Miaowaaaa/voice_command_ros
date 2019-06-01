@@ -1,4 +1,5 @@
 # Voice Command
+![](https://img.shields.io/badge/ROS-Kinetic-brightgreen.svg) ![](https://img.shields.io/badge/Qt-5.5.1-orange.svg) 
 A ROS package for recognize the voice command for robot.
 
 # How to use
