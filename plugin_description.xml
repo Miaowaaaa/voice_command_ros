@@ -1,0 +1,9 @@
+<library path="lib/libvoice_command">    
+  <class name="voice_command/VoiceRecordButton"
+         type="voice_command::VoiceRecordButton"
+         base_class_type="rviz::Panel">
+    <description>
+        A Button to record voice.
+    </description>
+  </class>
+</library>

@@ -1,0 +1,29 @@
+<launch>
+  <arg name="REG_NUM_SAMPLES"                    default="2000" />
+  <arg name="REG_SAMPLING_RATE"                  default="8000" />
+  <arg name="REG_COUNT_NUM"                      default="20" />
+  <arg name="REG_SAVE_LENGTH"                    default="20" />
+  <arg name="REG_NO_WORDS"                       default="6" />
+  <arg name="REG_nchannel"                       default="1" />
+  <arg name="REG_AUDIO_SAVE_PATH"                default="/home/Miaow" />
+  <arg name="REG_AUDIN_SAVE_NAME"                default="test" />
+  <arg name="REG_APP_ID"                         default="5cef711c" />
+  <arg name="REG_API_KEY"                        default="35be5779affe4fe4ad6a13adc1ea30f8" />
+  
+  <node pkg="voice_command" type="voice_reg_xf.py" name="voice_command" output="screen">
+
+    <param name="REG_NUM_SAMPLES"                  value="$(arg REG_NUM_SAMPLES)"               type="int"/>
+    <param name="REG_SAMPLING_RATE"                value="$(arg REG_SAMPLING_RATE)"             type="int"/>
+    <param name="REG_COUNT_NUM"                    value="$(arg REG_COUNT_NUM)"                 type="int"/>
+    <param name="REG_SAVE_LENGTH"                  value="$(arg REG_SAVE_LENGTH)"               type="int"/>
+    <param name="REG_NO_WORDS"                     value="$(arg REG_NO_WORDS)"                  type="int"/>
+    <param name="REG_APP_ID"                       value="$(arg REG_APP_ID)"                    type="str"/>
+    <param name="REG_API_KEY"                      value="$(arg REG_API_KEY)"                   type="str"/>
+    <param name="REG_nchannel"                     value="$(arg REG_nchannel)"                  type="int"/>
+    <param name="REG_AUDIO_SAVE_PATH"              value="$(arg REG_AUDIO_SAVE_PATH)"           type="str"/>
+    <param name="REG_AUDIN_SAVE_NAME"              value="$(arg REG_AUDIN_SAVE_NAME)"           type="str"/>
+  </node>
+  <node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find voice_command)/rviz/voice_command.rviz" />
+</launch>
+
