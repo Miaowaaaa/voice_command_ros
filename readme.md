@@ -3,6 +3,13 @@
 
 A ROS package for recognize the voice command for robot.
 
+# Prepare
+
+- 1. Regist a developer account in [xfyun](https://www.xfyun.cn/).
+- 2. Add a voice recognition application in your control board.
+- 3. Get APP_ID and API_KEY and use them in `voice_command.launch`.
+- 4. Add you ip address in white list.
+
 # How to use
 
 ```

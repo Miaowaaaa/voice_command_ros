@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Copyright (c) 2016 Xu Zhihao (Howe).  All rights reserved.
-This program is free software; you can redistribute it and/or modify
-This programm is tested on kuboki base turtlebot."""
 
 from pyaudio import PyAudio, paInt16
 import json
@@ -53,7 +50,6 @@ class recoder():
             self.voice_pub.publish(words)
             # reset record state
             self.is_release = True
-            rospy.loginfo("Reg result is %s.",words)
         else:
             # reset record state
             self.is_release = True
