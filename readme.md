@@ -20,3 +20,8 @@ A ROS package for recognize the voice command for robot.
 5. result will be shown in console.
 ```
 
+# Publish Topic
+
+- /reg_result  
+  - The type of message is `std_msgs/String` and the result can be access by `msg.data`.
+
