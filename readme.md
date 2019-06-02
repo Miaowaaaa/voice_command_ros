@@ -3,6 +3,10 @@
 
 A ROS package for recognize the voice command for robot.
 
+# Reference
+
+The code is referred to [baidu_speech](https://github.com/Miaowaaaa/baidu_speech) and extend package by using [xfyun](https://www.xfyun.cn/).
+
 # Prepare
 
 - 1. Regist a developer account in [xfyun](https://www.xfyun.cn/).
