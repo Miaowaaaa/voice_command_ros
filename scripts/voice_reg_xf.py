@@ -21,16 +21,19 @@ from std_msgs.msg import String
 
 class recoder():
     def __init__(self):
-        self.voice_service = rospy.Service("voice_service", Empty,
-                                           self.voice_service)
+        
+        self.voice_service = rospy.Service("voice_service", Empty,self.voice_service)
         self.voice_pub = rospy.Publisher('reg_result', String, queue_size=1)
+        # judge the record button state
         self.is_release = True
+        # set parameters
         self.define()
         rospy.spin()
 
     def voice_service(self, req):
         """
         service callback
+        req:    an empty request msg
         creata a thread to process time-cost step
         """
         if self.is_release:
@@ -43,6 +46,8 @@ class recoder():
     def voice_reg(self,thread_name,delay):
         """
         the thread for voice recognization
+        thread_name:    the name of thread
+        delay      :    the time of delay
         """
         if self.recode():
             self.savewav(self.fileName)
@@ -56,7 +61,9 @@ class recoder():
             rospy.logwarn("To few words can't be recognized!")
     
     def getHeader(self,aue,engineType):
-        
+        """
+        create a http request header
+        """
         curTime = str(int(time.time()))
         param = "{\"aue\":\"" + aue + "\"" + ",\"engine_type\":\"" + engineType + "\"}"
         paramBase64 = str(base64.b64encode(param.encode('utf-8')))
@@ -74,6 +81,9 @@ class recoder():
         return header
     
     def getBody(self,filepath):
+        """
+        read the record audio file and encode with base64
+        """
         binfile = open(filepath, 'rb')
         data = {'audio': base64.b64encode(binfile.read())}
         return data    
@@ -90,6 +100,9 @@ class recoder():
         return result['data']
     
     def define(self):
+        """
+        define parameters
+        """
         self.error_reason = {
             3300: '输入参数不正确',
             3301: '识别错误',
@@ -121,6 +134,9 @@ class recoder():
         self.Voice_String = []
 
     def recode(self):
+        """
+        recode audio date
+        """
         pa = PyAudio()
         stream = pa.open(format=paInt16,
                          channels=self.nchannel,
@@ -177,6 +193,9 @@ class recoder():
             return True
 
     def savewav(self, filename):
+        """
+        save as a audio file
+        """
         rospy.loginfo('save audio')
         file_path = '/home/Miaow'
         WAVE_FILE = '%s/%s.wav' % (file_path, filename)
