@@ -7,8 +7,8 @@
   <arg name="REG_nchannel"                       default="1" />
   <arg name="REG_AUDIO_SAVE_PATH"                default="/home/Miaow" />
   <arg name="REG_AUDIN_SAVE_NAME"                default="test" />
-  <arg name="REG_APP_ID"                         default="5cef711c" />
-  <arg name="REG_API_KEY"                        default="35be5779affe4fe4ad6a13adc1ea30f8" />
+  <arg name="REG_APP_ID"                         default="5cf247f2" />
+  <arg name="REG_API_KEY"                        default="1e8aaff568b36cd60f26ecd27655fb33" />
   
   <node pkg="voice_command" type="voice_reg_xf.py" name="voice_command" output="screen">
 

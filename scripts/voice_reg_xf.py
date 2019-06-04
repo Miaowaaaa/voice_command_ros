@@ -28,6 +28,8 @@ class recoder():
         self.is_release = True
         # set parameters
         self.define()
+        
+        self.voice_reg("reg",1,)
         rospy.spin()
 
     def voice_service(self, req):
@@ -49,16 +51,18 @@ class recoder():
         thread_name:    the name of thread
         delay      :    the time of delay
         """
-        if self.recode():
-            self.savewav(self.fileName)
-            words = self.reg()
-            self.voice_pub.publish(words)
-            # reset record state
-            self.is_release = True
-        else:
-            # reset record state
-            self.is_release = True
-            rospy.logwarn("To few words can't be recognized!")
+        while not rospy.is_shutdown():
+            if self.recode():
+                self.savewav(self.fileName)
+                words = self.reg()
+                print words
+                self.voice_pub.publish(words)
+                # reset record state
+                # self.is_release = True
+            else:
+                # reset record state
+                # self.is_release = True
+                rospy.logwarn("To few words can't be recognized!")
     
     def getHeader(self,aue,engineType):
         """
@@ -114,9 +118,9 @@ class recoder():
         }
         self.URL = "http://api.xfyun.cn/v1/service/v1/iat"
         
-        self.APPID = "5cef711c"
+        self.APPID = "5cf247f2"
         
-        self.API_KEY = "35be5779affe4fe4ad6a13adc1ea30f8"
+        self.API_KEY = "1e8aaff568b36cd60f26ecd27655fb33"
         self.aue = "raw"
         self.engineType = "sms8k"
         self.nchannel = 1
@@ -147,7 +151,9 @@ class recoder():
         save_buffer = []
         word_count = 0              #record the word number
         rospy.loginfo("begin to record audio data")
-        while not self.is_release:
+        self.Voice_String = []
+        no_words_count = 10
+        while True:
             string_audio_data = stream.read(self.NUM_SAMPLES)  
             # convert to an array
             audio_data = np.fromstring(string_audio_data, dtype=np.short)
@@ -156,15 +162,16 @@ class recoder():
             rospy.loginfo("np.max(audio_data)  %d", np.max(audio_data))
 
             # calculate the number of samples whose value higher than a threshold
-            large_sample_count = np.sum(audio_data > 500)
+            large_sample_count = np.sum(audio_data > 2000)
             word_count = word_count + large_sample_count
 
             # if the number is bigger than COUNT_NUM, save SAE_LENGTH blocks at least
             if large_sample_count > self.COUNT_NUM:
                 save_count = self.SAVE_LENGTH
-
+                no_words_count = no_words_count + 1
             else:
                 save_count -= 1
+                no_words_count = no_words_count - 1
             #print 'save_count',save_count
 
             # save datas in save_buffer
@@ -174,6 +181,9 @@ class recoder():
                 save_buffer.append(string_audio_data)
             else:
                 pass
+
+            if no_words_count < 1:
+                break
 
         # write save_buffer into a .wav file
         if len(save_buffer) > 0:
@@ -191,6 +201,7 @@ class recoder():
             return False
         else:
             return True
+        pa.close()
 
     def savewav(self, filename):
         """
