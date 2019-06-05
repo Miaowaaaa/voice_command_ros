@@ -1,7 +1,11 @@
 # Voice Command
 ![](https://img.shields.io/badge/ROS-Kinetic-brightgreen.svg) ![](https://img.shields.io/badge/Qt-5.5.1-orange.svg)   
 
-A ROS package for recognize the voice command for robot.
+A ROS package for recognize the voice command for robot.  
+
+- branch
+  - master: use a record button to record voice and recognition
+  - realtime: auto recognition for voice
 
 # Reference
 
