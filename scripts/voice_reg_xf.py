@@ -24,13 +24,21 @@ class recoder():
         
         self.voice_service = rospy.Service("voice_service", Empty,self.voice_service)
         self.voice_pub = rospy.Publisher('reg_result', String, queue_size=1)
+        self.voice_call = rospy.Subscriber('/is_reach',String,self.reach_callback)
         # judge the record button state
         self.is_release = True
+        self.is_reach = False
         # set parameters
         self.define()
         
         self.voice_reg("reg",1,)
         rospy.spin()
+    
+    def reach_callback(self,data):
+        """
+        if robot reach the goal, should publisha reach message to topic '/is_reach'
+        """
+        self.is_reach = True    
 
     def voice_service(self, req):
         """
@@ -52,17 +60,18 @@ class recoder():
         delay      :    the time of delay
         """
         while not rospy.is_shutdown():
-            if self.recode():
-                self.savewav(self.fileName)
-                words = self.reg()
-                print words
-                self.voice_pub.publish(words)
-                # reset record state
-                # self.is_release = True
-            else:
-                # reset record state
-                # self.is_release = True
-                rospy.logwarn("To few words can't be recognized!")
+            if self.is_reach:
+                if self.recode():
+                    self.savewav(self.fileName)
+                    words = self.reg()
+                    print words
+                    self.voice_pub.publish(words)
+                    # reset record state
+                    # self.is_release = True
+                else:
+                    # reset record state
+                    # self.is_release = True
+                    rospy.logwarn("To few words can't be recognized!")
     
     def getHeader(self,aue,engineType):
         """
